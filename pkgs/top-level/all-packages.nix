@@ -20398,6 +20398,8 @@ with pkgs;
 
   steamcmd = steamPackages.steamcmd;
 
+  steamwm = callPackage ../games/steamwm { };
+
   linux-steam-integration = callPackage ../games/linux-steam-integration {
     gtk = pkgs.gtk3;
   };
