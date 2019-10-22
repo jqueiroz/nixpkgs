@@ -2900,6 +2900,8 @@ in {
 
   pyxdg = callPackage ../development/python-modules/pyxdg { };
 
+  camxes = callPackage ../development/python-modules/camxes { };
+
   crayons = callPackage ../development/python-modules/crayons{ };
 
   django = self.django_1_11;
