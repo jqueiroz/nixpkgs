@@ -36,14 +36,14 @@ stdenv.mkDerivation rec {
   buildPhase = ''
     patchShebangs .
 
-    mkdir -p $out/${appdir}
-    cp -r $src/* $out/${appdir}
-    chmod -R +w $out/${appdir}
-    grep -rl '^#!/usr.*python' $out/${appdir} | xargs sed -i -s 's@^#!/usr.*python.*@#!${python}/bin/python@'
-    sed -i -e "s,EM_CONFIG = '~/.emscripten',EM_CONFIG = '$out/${appdir}/config'," $out/${appdir}/tools/shared.py
-    sed -i -e 's,^.*did not see a source tree above the LLVM.*$,      return True,' $out/${appdir}/tools/shared.py
-    sed -i -e 's,def check_sanity(force=False):,def check_sanity(force=False):\n  return,' $out/${appdir}/tools/shared.py
-    sed -i '10 i import ssl\nssl._create_default_https_context = ssl._create_unverified_context' $out/${appdir}/tools/system_libs.py
+    mkdir -p $out/$appdir
+    cp -r $src/* $out/$appdir
+    chmod -R +w $out/$appdir
+    grep -rl '^#!/usr.*python' $out/$appdir | xargs sed -i -s 's@^#!/usr.*python.*@#!${python3}/bin/python@'
+    sed -i -e "s,EM_CONFIG = '~/.emscripten',EM_CONFIG = '$out/$appdir/config'," $out/$appdir/tools/shared.py
+    sed -i -e 's,^.*did not see a source tree above the LLVM.*$,      return True,' $out/$appdir/tools/shared.py
+    sed -i -e 's,def check_sanity(force=False):,def check_sanity(force=False):\n  return,' $out/$appdir/tools/shared.py
+    sed -i '10 i import ssl\nssl._create_default_https_context = ssl._create_unverified_context' $out/$appdir/tools/system_libs.py
 
     # fixes cmake support
     sed -i -e "s/print \('emcc (Emscript.*\)/sys.stderr.write(\1); sys.stderr.flush()/g" emcc.py
